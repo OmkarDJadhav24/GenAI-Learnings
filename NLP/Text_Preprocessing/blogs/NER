@@ -1,0 +1,85 @@
+Getting Started with Named Entity Recognition (NER) in NLP
+
+Natural Language Processing (NLP) helps machines understand human language, and a key task in this process is Named Entity Recognition (NER).
+
+
+What is Named Entity Recognition (NER)?
+NER is the process of identifying and classifying named entities in text into predefined categories such as:
+
+Person names (e.g., Elon Musk)
+Organizations (e.g., Google)
+Locations (e.g., Paris)
+Dates (e.g., June 2023)
+Monetary values (e.g., $500 million)
+
+
+It’s widely used in applications like:
+
+Resume parsers
+Chatbots
+Search engines
+Financial document processing
+
+---------------------------------------------------------------------------------------------------
+1. NER Using spaCy (Recommended)
+spaCy is an industrial-strength NLP library that's easy to use and production-ready.
+
+To Install spaCy use command:
+pip install spacy
+
+python -m spacy download en_core_web_sm
+
+
+```
+!python -m spacy download en_core_web_sm
+import spacy
+```
+
+```
+# Load English tokenizer, POS tagger, parser, NER
+nlp = spacy.load("en_core_web_sm")
+
+text = "Apple was founded by Steve Jobs in California in 1976."
+
+doc = nlp(text)
+
+print("doc: ", doc, "\n")
+
+# Print named entities
+for ent in doc.ents:
+    print(ent.text, ":", ent.label_)
+```
+
+Output: 
+doc:  Apple was founded by Steve Jobs in California in 1976. 
+
+Apple : ORG
+Steve Jobs : PERSON
+California : GPE
+1976 : DATE
+
+---------------------------------------------------------------------------------------------
+
+2. NER Using NLTK (Educational)
+NLTK gives you a low-level feel of how NER works internally using POS tagging + chunking.
+
+```
+import nltk
+from nltk import word_tokenize, pos_tag, ne_chunk
+
+# Download necessary packages
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+
+text = "Apple was founded by Steve Jobs in California in 1976."
+
+tokens = word_tokenize(text)
+tags = pos_tag(tokens)
+tree = ne_chunk(tags)
+print(tree)
+```
+
+
+

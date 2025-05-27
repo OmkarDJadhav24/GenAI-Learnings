@@ -1,0 +1,108 @@
+Understanding Word Embeddings: Giving Meaning to Text in NLP
+
+When humans read, we understand words based on context and meaning. For example, we know that "king" and "queen" are related, while "king" and "apple" are not. But how can we teach machines to understand this?
+
+That’s where Word Embeddings come in.
+
+
+What are Word Embeddings?
+	Word embeddings are numerical representations of words in a dense vector space where similar words have similar vectors. Unlike Bag of Words or TF-IDF, embeddings capture the meaning and relationships between words.
+
+
+You can think of them as coordinates in a multi-dimensional space where:
+
+	“man” and “woman” are close to each other.
+
+	“king” − “man” + “woman” ≈ “queen”
+
+
+
+Why Not Just Use TF-IDF or Bag of Words?
+Here’s the problem with older methods like TF-IDF or BoW:
+
+	They treat words as independent tokens.
+
+	There’s no context or meaning captured.
+
+	Vectors are huge and sparse.
+
+
+
+Word embeddings fix this by:
+
+	Learning word relationships.
+
+	Creating compact and meaningful vectors (like 100 or 300 dimensions instead of thousands).
+
+	Working well with deep learning models.
+	
+	
+
+How Do Word Embeddings Work?
+	Word embeddings are usually pre-trained on large datasets using models like:
+
+	Word2Vec
+
+	GloVe (Global Vectors)
+
+	FastText
+
+	Or built-in in libraries like spaCy or transformers
+
+
+These models learn embeddings based on:
+
+Contextual similarity: Words used in similar contexts have similar meanings.
+
+	Example: If "dog", "puppy", and "canine" often appear in similar sentences, their embeddings will be close.
+	
+	
+	
+	
+Popular Word Embedding Models
+	Model	Highlights
+	Word2Vec	Predicts surrounding words (CBOW, Skip-Gram)
+	GloVe	Builds embeddings from global co-occurrence matrix
+	FastText	Uses subwords → better for rare words
+	BERT / LLMs	Contextual embeddings (more advanced)
+	
+	
+	
+Where Are Word Embeddings Used?
+
+	Chatbots and virtual assistants
+
+	Text classification (spam, sentiment)
+
+	Machine translation
+
+	Named Entity Recognition
+
+	Recommendation engines
+	
+	
+	
+Wrap-Up: Why Word Embeddings Matter
+	Word embeddings are one of the biggest innovations in NLP. They allow machines to understand the meaning of words, not just count them. They’ve paved the way for modern NLP techniques and are essential for building smart, language-based AI systems.
+	
+	
+	
+	
+	
+✅ Interview-style Answer:
+"We use word embeddings to represent words as dense numerical vectors that capture their semantic meaning and relationships. Unlike Bag of Words or TF-IDF, which only consider frequency or position, embeddings preserve the context and similarity between words. For example, embeddings can understand that 'king' and 'queen' are related, or that 'man' and 'woman' are similar. This allows machine learning models to better understand language and make more accurate predictions in tasks like sentiment analysis, machine translation, or question answering."
+
+
+
+
+🔍 What Are Dense Numerical Vectors?
+A dense numerical vector is just a list (or array) of numbers — but every element in that list has a meaningful value (not mostly zeros). Means each number encodes some information about the word’s meaning and context).
+
+
+
+🧠 What Does "Semantic Meaning" Mean?
+Semantic meaning refers to the actual meaning or concept behind a word — not just how it looks or sounds, but what it represents.
+
+Word	Semantic Meaning
+Dog	A four-legged animal that barks 🐶
+

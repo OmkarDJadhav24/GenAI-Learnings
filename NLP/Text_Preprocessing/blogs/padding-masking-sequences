@@ -1,0 +1,76 @@
+1. Padding
+Why padding is needed:
+	1. Neural networks expect input sequences to be the same length.
+	2. Real-world sentences have different lengths.
+	3. Padding ensures uniform shape by adding dummy tokens (usually zeros) to shorter sequences.
+	
+	```
+	["I love NLP"]           → [1, 5, 9]
+	["NLP is amazing"]       → [5, 2, 11]
+	["Wow"]                  → [7]
+	After padding to length 5:
+	[1, 5, 9, 0, 0]
+	[5, 2, 11, 0, 0]
+	[7, 0, 0, 0, 0]
+
+	```
+	In code:
+	pad_sequences(sequences, maxlen=5, padding='post')
+	Here, post adds zeros at the end. pre would add them at the beginning.
+	
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. Masking
+Why masking is needed:
+	1. Padding introduces dummy tokens (zeros) that shouldn't affect learning.
+	2. Masking tells the model to ignore padded values during training.
+	
+How it works:
+	1. The Embedding layer automatically supports masking if you set: mask_zero=True
+	2. It creates a mask tensor that tracks which tokens are real and which are padding.
+	3. Note: If you use mask_zero=True, ensure the model layers (like LSTM) also support masking.
+	
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Handling Sequences
+Handling sequences includes:
+	1. Truncating: Cut longer sequences to maxlen. (truncating='post')
+	2. Batching: Group similar-length sequences to minimize wasted padding.
+	3. Mask-aware Layers: Use LSTM/GRU that understands masks if you want to skip padded time steps.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. What Are Mask-Aware Layers?
+	When we use padding, the model sees some values (like 0) that are not actual words — just placeholders. We don’t want the model to learn anything from these zero tokens.
+
+	Mask-aware layers are layers that can understand a mask — a binary indicator that says:
+
+		1 (or True) = real word/token
+
+		0 (or False) = padding (ignore this)
+
+	So, mask-aware layers like LSTM, GRU, and Bidirectional in TensorFlow/Keras will automatically skip computation for padded tokens during both forward and backward passes.
+
+	Examples of mask-aware layers in Keras:
+		1. Embedding(mask_zero=True)
+		2. LSTM(), GRU(), SimpleRNN()
+		3. Bidirectional(...)
+		4. Attention(...) (in some forms)
+
+	If a layer is not mask-aware, the padded values might wrongly influence predictions.
+	
+	
+2. How Does Masking Flow?
+	Once you set mask_zero=True in the Embedding layer, Keras automatically:
+		1. Creates a mask tensor (with 1s for real tokens and 0s for padding).
+		2. Passes this mask to all mask-aware layers.
+		3. Mask-aware layers skip or ignore time steps where the mask is 0.
+
+	Internally:
+	```
+	mask = [1, 1, 1, 0, 0]  # means: only consider the first 3 tokens
+	```
+	
+	
+	So the LSTM will process only the real tokens [t1, t2, t3], and skip [PAD, PAD].
+	

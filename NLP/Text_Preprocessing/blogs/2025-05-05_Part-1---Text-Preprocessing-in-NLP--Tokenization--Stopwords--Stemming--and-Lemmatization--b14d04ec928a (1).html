@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Part 1: “Text Preprocessing in NLP: Tokenization, Stopwords, Stemming, and Lemmatization”</title><style>
+      * {
+        font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+      }
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-size: 50px;
+        margin-bottom: 17px;
+        color: #333;
+      }
+      h2 {
+        font-size: 24px;
+        line-height: 1.6;
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+        color: #333;
+      }
+      h3 {
+        font-size: 30px;
+        margin: 10px 0 20px 0;
+        color: #333;
+      }
+      header {
+        width: 640px;
+        margin: auto;
+      }
+      section {
+        width: 640px;
+        margin: auto;
+      }
+      section p {
+        margin-bottom: 27px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #333;
+      }
+      section img {
+        max-width: 640px;
+      }
+      footer {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
+      }
+      .aspectRatioPlaceholder {
+        max-width: auto !important;
+        max-height: auto !important;
+      }
+      .aspectRatioPlaceholder-fill {
+        padding-bottom: 0 !important;
+      }
+      header,
+      section[data-field=subtitle],
+      section[data-field=description] {
+        display: none;
+      }
+      </style></head><body><article class="h-entry">
+<header>
+<h1 class="p-name">Part 1: “Text Preprocessing in NLP: Tokenization, Stopwords, Stemming, and Lemmatization”</h1>
+</header>
+<section data-field="subtitle" class="p-summary">
+Are you stepping into the world of Natural Language Processing (NLP)? Before you build any model, your raw text needs cleaning and…
+</section>
+<section data-field="body" class="e-content">
+<section name="36bf" class="section section--body section--first section--last"><div class="section-divider"><hr class="section-divider"></div><div class="section-content"><div class="section-inner sectionLayout--insetColumn"><h3 name="55d1" id="55d1" class="graf graf--h3 graf--leading graf--title"><strong class="markup--strong markup--h3-strong">Part 1: “Text Preprocessing in NLP: Tokenization, Stopwords, Stemming, and Lemmatization”</strong></h3><p name="c9b1" id="c9b1" class="graf graf--p graf-after--h3">Are you stepping into the world of Natural Language Processing (NLP)? Before you build any model, your raw text needs cleaning and structuring. In this beginner-friendly guide, we’ll walk through the core text preprocessing steps — tokenization, removing stopwords, stemming, and lemmatization — using Python code examples.</p><p name="eca3" id="eca3" class="graf graf--p graf-after--p">Natural Language Processing (NLP) is the bridge between human language and machines. But before we dive into training complex models, we need to clean and prepare our data — this is where <strong class="markup--strong markup--p-strong">text preprocessing</strong> comes in.</p><p name="1226" id="1226" class="graf graf--p graf-after--p">In this blog, we’ll walk through four essential preprocessing steps:</p><ol class="postList"><li name="9b91" id="9b91" class="graf graf--li graf-after--p"><strong class="markup--strong markup--li-strong">Tokenization</strong></li><li name="83b2" id="83b2" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Removing Stopwords</strong></li><li name="7892" id="7892" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Stemming</strong></li><li name="442d" id="442d" class="graf graf--li graf-after--li"><strong class="markup--strong markup--li-strong">Lemmatization</strong></li></ol><p name="a075" id="a075" class="graf graf--p graf-after--li">Each step plays a vital role in transforming raw text into structured data that NLP models can understand and process effectively.</p><ol class="postList"><li name="fe20" id="fe20" class="graf graf--li graf-after--p"><strong class="markup--strong markup--li-strong">Tokenization: </strong>Tokenization is the process of breaking down text into smaller pieces call <strong class="markup--strong markup--li-strong">tokens. </strong>This tokens could we words, subwords or even sentences. Means the text can be tokenised by word and tokenised by sentence.</li></ol><p name="6594" id="6594" class="graf graf--p graf-after--li">The first thing we need to do is make sure that we have <strong class="markup--strong markup--p-strong">Python</strong> installed. Next step is to install <strong class="markup--strong markup--p-strong">NLTK</strong>. It’s a best practice to install it in a virtual environment. We are going to use conda environment.</p><p name="15cf" id="15cf" class="graf graf--p graf-after--p">To create conda environment we can use command:</p><blockquote name="5a7e" id="5a7e" class="graf graf--blockquote graf-after--p">conda create — prefix ./env jupyter</blockquote><p name="8a57" id="8a57" class="graf graf--p graf-after--blockquote">Once env is created, we can activate it and start <strong class="markup--strong markup--p-strong">jupyter notebook. </strong>In jupyter notebook we can install NLTK as below:</p><figure name="2495" id="2495" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*wDak_PKJvyrpc7eZcz7c0A.png" data-width="1025" data-height="183" src="https://cdn-images-1.medium.com/max/800/1*wDak_PKJvyrpc7eZcz7c0A.png"></figure><p name="d7d0" id="d7d0" class="graf graf--p graf-after--figure">Once NLTK is installed, we can import below functions for Tokenization:</p><figure name="e585" id="e585" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*eHxIDl7Y6SvheilVAObTVg.png" data-width="1202" data-height="283" data-is-featured="true" src="https://cdn-images-1.medium.com/max/800/1*eHxIDl7Y6SvheilVAObTVg.png"></figure><p name="4989" id="4989" class="graf graf--p graf-after--figure">i. We can use <code class="markup--code markup--p-code">sent_tokenize()</code> to split up <code class="markup--code markup--p-code">example_string</code> into sentences:</p><figure name="e0fa" id="e0fa" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*z8WtpBuMlDR7VOGcaIEauw.png" data-width="1157" data-height="145" src="https://cdn-images-1.medium.com/max/800/1*z8WtpBuMlDR7VOGcaIEauw.png"></figure><p name="f562" id="f562" class="graf graf--p graf-after--figure">Tokenizing example_string by sentence gives us a list of sentences.</p><p name="64f9" id="64f9" class="graf graf--p graf-after--p">ii. We can use <code class="markup--code markup--p-code">word_tokenize()</code> to split up <code class="markup--code markup--p-code">example_string</code> into words:</p><figure name="ba66" id="ba66" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*holtbZuDGPVMaTZ48SfymA.png" data-width="1403" data-height="376" src="https://cdn-images-1.medium.com/max/800/1*holtbZuDGPVMaTZ48SfymA.png"></figure><p name="9f9e" id="9f9e" class="graf graf--p graf-after--figure">Tokenizing example_string by word gives us a list of words.</p><p name="750e" id="750e" class="graf graf--p graf-after--p">2. <strong class="markup--strong markup--p-strong">Removing Stopwords: </strong>Stopwords are commonly used words like “the”, “is”, “in” and “and”. They don’t contribute much meaning and are often removed to reduce noise in the data.</p><figure name="6f28" id="6f28" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*Wyf0gkY6TjpSAnHpzs1DgQ.png" data-width="1638" data-height="615" src="https://cdn-images-1.medium.com/max/800/1*Wyf0gkY6TjpSAnHpzs1DgQ.png"></figure><p name="01eb" id="01eb" class="graf graf--p graf-after--figure"><code class="markup--code markup--p-code">stopwords.words(&#39;english&#39;)</code> includes only lowercase versions of stop words that’s why we are using .lower() function.</p><p name="d547" id="d547" class="graf graf--p graf-after--p">We have filtered out a few words like ‘on’, ‘is’ and ‘the’.</p><p name="b091" id="b091" class="graf graf--p graf-after--p">3. <strong class="markup--strong markup--p-strong">Stemming: </strong>Stemming reduce a word to its base or root form, often by chopping off prefixes or suffixes. It’s a rule based approach and may not always return real words.</p><figure name="022b" id="022b" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*gfvi53Db_QyIxQhH5UUhPA.png" data-width="1664" data-height="237" src="https://cdn-images-1.medium.com/max/800/1*gfvi53Db_QyIxQhH5UUhPA.png"></figure><p name="7916" id="7916" class="graf graf--p graf--startsWithSingleQuote graf-after--figure">‘natur’, ‘languag’, ‘amaz’ looks a little inconsistent. Understemming and overstemming are two ways stemming can go wrong.</p><p name="24a8" id="24a8" class="graf graf--p graf-after--p">Fortunately, we have some other ways to reduce words to their core meaning, such as <strong class="markup--strong markup--p-strong">lemmatizing.</strong></p><p name="e3f5" id="e3f5" class="graf graf--p graf-after--p">4. <strong class="markup--strong markup--p-strong">Lemmatization: </strong>Like stemming, lemmatizing reduces words to their core meaning, but it will give you a complete English word that makes sense on its own instead of just a fragment of a word like ‘natur’.</p><figure name="93f7" id="93f7" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*vJcnacEU2K2MvPYcQ_dUfw.png" data-width="1664" data-height="424" src="https://cdn-images-1.medium.com/max/800/1*vJcnacEU2K2MvPYcQ_dUfw.png"></figure><p name="4a81" id="4a81" class="graf graf--p graf-after--figure">That looks right. The plurals <code class="markup--code markup--p-code">&#39;friends&#39;</code> and <code class="markup--code markup--p-code">&#39;scarves&#39;</code> became the singulars <code class="markup--code markup--p-code">&#39;friend&#39;</code> and <code class="markup--code markup--p-code">&#39;scarf&#39;</code>.</p><p name="2afe" id="2afe" class="graf graf--p graf-after--p"><strong class="markup--strong markup--p-strong">Note:</strong> A <strong class="markup--strong markup--p-strong">lemma</strong> is a word that represents a whole group of words, and that group of words is called a <strong class="markup--strong markup--p-strong">lexeme</strong>. For example, “blend” is the <strong class="markup--strong markup--p-strong">lemma</strong>, and “blending” is part of the <strong class="markup--strong markup--p-strong">lexeme</strong>. So when you lemmatize a word, you are reducing it to its lemma.</p><p name="a738" id="a738" class="graf graf--p graf-after--p">What would happen if you lemmatized a word that looked very different from its lemma?</p><figure name="43b4" id="43b4" class="graf graf--figure graf-after--p"><img class="graf-image" data-image-id="1*a_b_TI19RTsuEFBukcE6GQ.png" data-width="1664" data-height="217" src="https://cdn-images-1.medium.com/max/800/1*a_b_TI19RTsuEFBukcE6GQ.png"></figure><p name="1ece" id="1ece" class="graf graf--p graf-after--figure graf--trailing">First got the result ‘worst’ because lemmatizer.lemmatize() assumed that “worst” was a noun. Then we cleared that we want “worst” to be an adjective, so we got ‘bad’ as a result and for this we used the concept called <strong class="markup--strong markup--p-strong">POS Tagging</strong>.</p></div></div></section>
+</section>
+<footer><p>By <a href="https://medium.com/@omkarjadhav7522" class="p-author h-card">Omkar Jadhav</a> on <a href="https://medium.com/p/b14d04ec928a"><time class="dt-published" datetime="2025-05-05T15:05:19.776Z">May 5, 2025</time></a>.</p><p><a href="https://medium.com/@omkarjadhav7522/text-preprocessing-in-nlp-tokenization-stopwords-stemming-and-lemmatization-b14d04ec928a" class="p-canonical">Canonical link</a></p><p>Exported from <a href="https://medium.com">Medium</a> on May 7, 2025.</p></footer></article></body></html>

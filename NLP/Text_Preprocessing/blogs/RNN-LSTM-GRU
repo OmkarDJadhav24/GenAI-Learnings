@@ -1,0 +1,215 @@
+1. Recurrent Neural Network (RNN)
+
+What is RNN?
+Ans: RNN is a type of neural network used for sequence data, such as:
+	1. Sentences
+	2. Time series
+	3. Audio
+or 
+Ans: RNN is designed for sequence data (like text), where the output depends on previous elements in the sequence.
+	
+The Idea:
+It processes one word at a time and remembers information using a hidden state.
+
+Example:
+Let’s say we want to process this sentence:
+"I love NLP"
+
+RNN processes:
+
+1. “I” → saves info in memory
+2. “love” → uses “I” + “love”
+3. “NLP” → uses “I + love” + “NLP”
+
+So it builds understanding from the whole sentence, not just the last word.
+
+
+Problem with RNN:
+* It forgets things quickly.
+* When sequences are long, it can’t remember early words well (this is called the vanishing gradient problem).
+
+
+Analogy: Imagine reading a sentence word-by-word but having poor memory—you remember only the last few words.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. Long Short-Term Memory (LSTM)
+
+Why LSTM?
+Ans: LSTM solves the problem of forgetting in RNN. It uses special memory cells and gates.
+
+What is a gate?
+A gate is like a filter that decides:
+	* What to remember
+	* What to forget
+	* What to output
+
+LSTM Has 3 Gates:
+	1. Forget Gate: What info should we forget?
+	2. Input Gate: What new info to add to memory?
+	3. Output Gate: What info should we output?
+
+
+Analogy:
+Think of it like a notebook (memory) with sticky notes:
+	1. You can erase old notes (forget gate)
+	2. Write new ones (input gate)
+	3. Read specific notes when needed (output gate)
+
+This way, LSTM remembers important stuff for longer and is better for tasks like sentiment analysis, language translation, etc.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Gated Recurrent Unit (GRU)
+
+Why GRU?
+Ans: GRU is a simpler version of LSTM.
+or
+GRU (Gated Recurrent Unit) is a type of Recurrent Neural Network (RNN) designed to capture long-term dependencies more effectively than traditional RNNs — like LSTM, but with a simpler structure.
+
+
+How is it different?
+GRU has only 2 gates:
+	1. Update gate: Combines input & forget gate.
+	2. Reset gate: Helps decide how much past info to keep.
+
+Is GRU better?
+	* Faster to train
+	* Works well for smaller datasets
+	* But may be less powerful than LSTM for very long sequences
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Comparison Table:
+Feature			RNN		LSTM		GRU
+
+Memory Handling		Weak		Strong		Strong
+Gates			None		3 Gates		2 Gates
+Training Speed		Fast		Slower		Faster
+Use Case		Basic tasks	Complex tasks	Mid-range
+
+
+
+Summary (When to use what?):
+	1. Use RNN only for very simple tasks
+	2. Use LSTM for tasks that need long memory, like long texts
+	3. Use GRU if you want faster training with similar performance
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Let’s break down the flow of data in an LSTM step-by-step with simple intuition:
+
+
+LSTM: Data Flow Explanation (Step-by-Step)
+
+Let’s assume we are processing the sentence:
+	“I love natural language processing” — one word at a time.
+
+Each word goes through the LSTM cell, which has 3 key gates:
+	1. Forget Gate
+	2. Input Gate
+	3. Output Gate
+
+We also track:
+	1. h_t (Hidden State) — short-term memory (passed to the next step)
+	2. c_t (Cell State) — long-term memory (preserved across time steps)
+
+
+Step-by-Step (For One Word at a Time):
+
+1. Forget Gate (what to erase from memory)
+	Input: current word + previous hidden state
+	Goal: decide what to forget from the old cell state
+
+	formula: f_t = sigmoid(W_f * [h_{t-1}, x_t] + b_f)
+	
+	Example:
+	If the previous word was "not", and current word is "bad", we might retain “not” to understand “not bad”.
+
+
+2. Input Gate (what to add to memory)
+	Goal: decide what new information to store
+
+	i_t = sigmoid(W_i * [h_{t-1}, x_t] + b_i)
+	~ and ~
+	C~_t = tanh(W_c * [h_{t-1}, x_t] + b_c)
+
+	i_t: how much to update
+	C~_t: new candidate values to possibly add
+
+
+3. Update Cell State (long-term memory)
+	c_t = f_t * c_{t-1} + i_t * C~_t
+	
+	1. Combine what we forgot and what we added
+	2. This becomes our new long-term memory
+	
+	
+4. Output Gate (what to show / pass forward)
+	Goal: decide what to output as hidden state (short-term memory)
+	
+	o_t = sigmoid(W_o * [h_{t-1}, x_t] + b_o)
+	h_t = o_t * tanh(c_t)
+	
+
+
+In Summary (Simple Analogy):
+
+Think of an LSTM cell as a smart student who:
+	1. Forgets irrelevant info (forget gate)
+	2. Learns new useful info (input gate)
+	3. Writes memory notes (cell state)
+	4. Speaks only what’s needed (output gate)	
+	
+	
+Once we go through each word in the sentence this way, we end up with a final hidden state that summarizes the meaning of the sequence — perfect for tasks like classification, translation, etc.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Let’s break down the flow of data in GRU step-by-step with simple intuition:
+
+
+GRU: Data Flow Explanation (Step-by-Step)
+
+What is GRU?
+Ans: GRU is a simplified version of LSTM, introduced to reduce complexity while still solving the vanishing gradient problem in RNNs.
+
+It has only 2 gates (compared to 3 in LSTM), making it faster and easier to train.
+
+
+Core Idea
+GRU uses gates to decide:
+	1. What to keep from the past
+	2. What to update with the current input
+
+Unlike LSTM, GRU merges the cell state and hidden state into one, and uses fewer gates, which makes it computationally faster.
+
+
+GRU Architecture (Per Timestep)
+Components:
+
+| Gate / Vector                        | Purpose                                                                                     |
+| ------------------------------------ | ------------------------------------------------------------------------------------------- |
+| 🔁 **Update Gate** $z_t$             | Controls how much of the **past info** to keep (like LSTM's input + forget gates combined). |
+| 🔄 **Reset Gate** $r_t$              | Controls how much of the **past info** to forget when computing the new candidate.          |
+| ⚙️ **Candidate State** $\tilde{h}_t$ | The "proposal" for the new hidden state (uses reset gate).                                  |
+| 📤 **Hidden State** $h_t$            | The actual output state after combining past and new information.                           |
+
+
+LSTM vs GRU — Key Differences
+
+| Feature         | **LSTM**                    | **GRU**                    |
+| --------------- | --------------------------- | -------------------------- |
+| Number of gates | 3 (Input, Forget, Output)   | 2 (Update, Reset)          |
+| Cell state      | Separate from hidden state  | No separate cell state     |
+| Complexity      | More parameters             | Fewer parameters (simpler) |
+| Training speed  | Slower due to complexity    | Faster                     |
+| Performance     | Better for longer sequences | Often comparable to LSTM   |
+
+
