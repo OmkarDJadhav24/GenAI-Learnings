@@ -1,0 +1,137 @@
+
+
+
+
+🧠 What is Attention in NLP?
+Imagine you’re translating the sentence:
+
+“The cat sat on the mat.”
+
+When generating the French version, the model should “pay attention” to specific words depending on which word it is currently translating.
+
+**Attention** allows the model to focus on relevant parts of the input sentence — it's like giving weight to different words based on importance.
+
+
+🧩 Types of Attention
+We’ll focus on Self-Attention, Scaled Dot-Product Attention and Multihead attention which are used in the Transformer model.
+
+
+🔶 1. Self-Attention (Used in Transformers)
+Each word looks at other words (including itself) to gather contextual information.
+So instead of treating a word independently, the model captures relationships between words.
+
+Example:
+For sentence: "The cat sat on the mat"
+When processing the word "sat", it might attend more to "cat" and "mat" to understand context.
+
+
+🧠 Self-Attention: Tiny Example
+Let's say we have a sequence with 3 words:
+["I", "love", "NLP"]
+
+
+Assume their input embeddings are:
+
+| Word | Embedding (dimension = 2) |
+| ---- | ------------------------- |
+| I    | [1, 0]                   |
+| love | [0, 1]                   |
+| NLP  | [1, 1]                   |
+
+
+Step 1: Create Query (Q), Key (K), Value (V)
+Assume so
+
+me toy weight matrices (same for all tokens): 	
+
+Wq = [[1, 0],
+      [0, 1]]
+
+Wk = [[1, 0],
+      [0, 1]]
+
+Wv = [[1, 0],
+      [0, 1]]
+
+Since weights are identity matrices in this example:
+
+Q = K = V = same as input embeddings
+
+
+Step 2: Compute Attention Scores (Q × Kᵗ)
+We compute dot products of each Query with all Keys.
+
+Let’s compute attention for "I" ([1, 0]):
+
+score("I","I")     = [1,0]·[1,0] = 1
+score("I","love")  = [1,0]·[0,1] = 0
+score("I","NLP")   = [1,0]·[1,1] = 1
+
+So raw scores: [1, 0, 1]
+
+
+Step 3: Softmax
+Apply softmax to [1, 0, 1]:
+
+softmax(1,0,1)≈[0.422,0.155,0.422]
+
+This means the word "I" pays most attention to itself and "NLP", and less to "love".
+
+
+
+Step 4: Weighted Sum of Values
+Now, multiply each Value vector by the corresponding attention weight and sum:
+
+Output("I") = 0.422*[1,0] + 0.155*[0,1] + 0.422*[1,1]
+            = [0.422, 0] + [0, 0.155] + [0.422, 0.422]
+            = [0.844, 0.577]
+
+
+So the final contextual embedding for "I" is [0.844, 0.577].
+
+Repeat this for "love" and "NLP".
+
+
+✅ Summary
+
+
+
+
+
+🔶 2. Scaled Dot-Product Attention
+The actual math behind it:
+
+For each word in the sequence, we compute:
+
+Query (Q): What am I looking for?
+
+Key (K): What do I offer?
+
+Value (V): What information do I carry?
+
+
+Then:
+Attention(Q, K, V) = softmax((Q × Kᵀ) / √d_k) × V
+
+Q × Kᵀ: Measures similarity between words
+
+√d_k: Scales the dot product to prevent large values
+
+softmax: Converts scores to probabilities
+
+Multiply by V: Combines the input based on attention scores
+
+
+🔶 3. Multi-Head Attention
+Instead of learning one set of Q, K, V, we learn multiple (like 8 or 12) to capture different types of relationships (e.g., syntactic, semantic).
+
+It’s like giving the model multiple “heads” to look at the data from different perspectives.
+
+
+🤔 Why is this powerful?
+The model dynamically decides what to focus on.
+
+Works better than fixed-size context windows (used in older models like RNNs).
+
+Key to how transformers outperform older models in NLP tasks.
+

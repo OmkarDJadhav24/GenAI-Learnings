@@ -1,0 +1,166 @@
+🔍 Attention Mechanism in NLP — A Gentle & Visual Guide
+Modern NLP models like Transformers rely heavily on attention mechanisms, especially self-attention, to understand context and relationships between words. In this blog, we’ll walk through:
+
+1. Self-Attention: What it is, how it works
+2. Scaled Dot-Product Attention
+3. Multi-Head Attention
+4. With examples and visualizable steps
+
+
+**Attention** allows the model to focus on relevant parts of the input sentence — it's like giving weight to different words based on importance.
+
+
+🧩 Types of Attention
+We’ll focus on Self-Attention, Scaled Dot-Product Attention and Multihead attention which are used in the Transformer model.
+
+
+🔶 1. Self-Attention (Used in Transformers)
+Each word looks at other words (including itself) to gather contextual information.
+So instead of treating a word independently, the model captures relationships between words.
+
+📌 Step 1: Input Embeddings
+Suppose our input sentence is:
+
+"I am brave"
+
+Each word is first converted into a vector via word embeddings like Word2Vec, GloVe, or trained embeddings. Assume we use 2D embeddings for simplicity:
+
+I     → [1, 0]  
+am    → [0, 1]  
+brave → [1, 1]
+
+So, input matrix X becomes:
+
+X = [[1, 0],
+     [0, 1],
+     [1, 1]]
+
+
+📌 Step 2: Create Query (Q), Key (K), and Value (V)
+We now transform each word’s embedding into three separate vectors:
+
+Query (Q): What this word is looking for in others
+
+Key (K): What this word contains for others to match
+
+Value (V): The actual content/information
+
+Each of these are learned via different weight matrices:
+
+Q = X @ Wq.T
+K = X @ Wk.T
+V = X @ Wv.T
+
+
+Where Wq, Wk, Wv are trainable parameters (matrices).
+
+Let’s assume:
+
+Wq = [[1, 0],
+      [0, 1]]
+Wk = [[1, 0],
+      [0, 1]]
+Wv = [[1, 2],
+      [3, 4]]
+
+
+Then we compute:
+
+Q = X @ Wq.T  → same as X here
+K = X @ Wk.T  → same as X here
+V = X @ Wv.T  → custom matrix as below
+
+V[0] = x[0] @ Wv -> [1, 0] @ [[1, 2],      = [1, 2]
+                              [3, 4]]
+
+
+V[1] = x[1] @ Wv -> [0, 1] @ [[1, 2],      = [3, 4]
+                              [3, 4]]
+
+V[2] = x[2] @ Wv -> [1, 1] @ [[1, 2],      = [1+3, 2+4] = [4, 6]
+                              [3, 4]]
+
+
+V = [[1, 2],    # for "I"
+     [3, 4],    # for "am"
+     [4, 6]]    # for "brave"
+
+
+
+Resulting in:
+
+Q = [[1, 0],     K = [[1, 0],     V = [[1, 2],
+     [0, 1],          [0, 1],          [3, 4],
+     [1, 1]]          [1, 1]]          [4, 6]]
+
+
+
+📌 Step 3: Compute Attention Scores
+To see how much one word should pay attention to others, we compute **dot products between Q and K vectors**.
+
+For example, the attention scores for word "I" (Q[0]) with all K:
+
+score("I", "I")     = Q[0] • K[0] = [1, 0] • [1, 0] = 1  
+score("I", "am")    = Q[0] • K[1] = [1, 0] • [0, 1] = 0  
+score("I", "brave") = Q[0] • K[2] = [1, 0] • [1, 1] = 1  
+
+Resulting raw attention scores:
+[1, 0, 1]
+
+
+As calculation for "am" and "brave".
+
+
+📌 Step 4: Apply Softmax
+Softmax converts scores into probabilities that sum to 1:
+
+softmax([1, 0, 1]) = [0.422, 0.155, 0.422]
+
+This means word "I" pays 42.2% attention to itself, 42.2% to "brave", and 15.5% to "am".
+
+
+
+📌 Step 5: Weighted Sum of Values (Final Output)
+Use attention weights to compute the final vector for "I":
+
+Output("I") = 0.422 * V[0] + 0.155 * V[1] + 0.422 * V[2]
+            = 0.422 * [1,2] + 0.155 * [3,4] + 0.422 * [4,6]
+            = [0.422, 0.844] + [0.465, 0.620] + [1.688, 2.533]
+            = [2.575, 3.997]
+
+This gives us the output embedding for word "I" with context included.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🔁 Scaled Dot-Product Attention
+In real applications, the dot product values become too large as dimension increases. So we scale it:
+
+Attention(Q, K, V) = softmax(QKᵀ / √d_k) @ V
+
+Where d_k is the key dimension. Scaling stabilizes gradients during training.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+🔄 Multi-Head Attention
+Instead of doing this once, multi-head attention repeats this with different Wq, Wk, Wv sets in parallel. It captures different relationships:
+
+MultiHead(Q, K, V) = Concat(head1, head2, ..., headN) @ W_o
+
+Each head learns to focus on different patterns (e.g., syntax, entities, topic).
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+🎯 Summary
+Step	                             What Happens
+Input Embedding	Raw words →          word vectors
+Create Q, K, V->                     Input vectors are transformed into 3 roles (query, key, value)
+Compute Scores->	             Each word calculates dot product with other words' keys
+Softmax Normalization->              Scores turned into probabilities
+Weighted Sum->                       Output is the weighted combination of value vectors
+Multi-Head Attention->               Run multiple attention layers in parallel
+
+
+
