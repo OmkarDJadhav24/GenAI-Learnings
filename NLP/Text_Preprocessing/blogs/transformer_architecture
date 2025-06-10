@@ -1,0 +1,143 @@
+📘 Understanding Transformers – Complete Guide
+
+🧠 Why Transformers?
+Traditional RNNs and LSTMs process sequences step-by-step, making them slow and hard to parallelize. Transformers overcome this by using attention mechanisms to process entire sequences at once, enabling faster training and capturing long-range dependencies.
+
+
+🔍 High-Level Overview
+Transformers consist of:
+
+Encoder-Decoder Architecture
+
+Each Encoder contains: Multi-head Attention + Feed-Forward
+
+Each Decoder contains: Masked Multi-head Attention + Encoder-Decoder Attention + Feed-Forward
+
+Input and output are sequences (sentences, tokens, etc.).
+
+
+
+🧩 Core Components
+1. Input Embedding
+Raw tokens are converted into vectors. Similar words have similar embeddings.
+
+2. Positional Encoding
+Since Transformers don’t have recurrence, they add a positional encoding to the input embeddings to give the model information about the order of words.
+
+Example:
+
+Position 0: [0, 0, 0, ...]
+Position 1: [0.84, 0.12, ...]
+
+
+3. Self-Attention Mechanism
+For every token, we ask:
+Which other tokens should I pay attention to?
+
+💡 Steps:
+Create Query (Q), Key (K), and Value (V) matrices from the input.
+
+Calculate attention scores:
+Attention(Q, K, V) = softmax(Q·Kᵀ / √d_k) · V
+
+Multiply the attention scores by V (Values) to get the weighted output.
+
+This allows the model to dynamically focus on different words depending on the context.
+
+
+
+🔁 Encoder Block (×N)
+Each encoder block contains:
+
+Multi-Head Self-Attention
+
+Add & Layer Normalization
+
+Feed Forward Neural Network
+
+Add & Layer Normalization
+
+Multiple encoder blocks (usually 6–12) are stacked to learn complex features.
+
+
+
+
+🔁 Decoder Block (×N)
+Each decoder block includes:
+
+Masked Multi-Head Attention (to prevent attending to future words)
+
+Encoder-Decoder Attention (focus on encoder output)
+
+Feed Forward Neural Network
+
+Add & Layer Normalization
+
+
+
+
+🔗 Multi-Head Attention
+Instead of calculating one attention, we compute multiple in parallel, allowing the model to learn information from different representation subspaces.
+
+Heads = 8 or 12 in most models
+
+Each head has its own Q, K, V matrices
+
+
+
+⚙️ Feed-Forward Layer
+A simple 2-layer fully connected network:
+
+FFN(x) = max(0, xW1 + b1)W2 + b2
+
+
+
+🧮 Positional Encoding Formula
+Uses sine and cosine to inject position:
+
+PE(pos, 2i) = sin(pos / 10000^(2i/d_model))
+PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+
+
+
+🏁 Final Output
+Decoder generates one token at a time using previously generated tokens + encoder context.
+
+Output passes through a linear + softmax layer to get final predicted token.
+
+
+
+⚡ Full Forward Pass Flow:
+Input Sentence → Embed → Add Positional Encoding → Encoder Stack → Decoder Stack → Output Tokens
+
+
+
+🔄 Training Objective
+Usually next word prediction or masked token prediction using cross-entropy loss.
+
+
+
+🔍 Summary Table
+Component	                           Role
+Input Embedding	                           Turns words into vectors
+Positional Encoding	                   Adds order info to tokens
+Self-Attention	                           Learns contextual relationships
+Multi-Head Attention	                   Learns multiple attention patterns simultaneously
+FFN Layer	                           Applies non-linear transformation
+Layer Norm	                           Stabilizes training
+Encoder-Decoder Attn	                   Decoder attends to encoder output
+Masked Attention	                   Prevents future token leakage
+
+
+
+
+📘 Real-World Transformer Models
+Model	Built On	       Purpose
+BERT	Encoder	               Understanding tasks (Q&A, NER)
+GPT	Decoder  	       Text generation
+T5	Encoder-Decoder	       Translation, Summarization
+BART	Encoder-Decoder	       Denoising & Seq2Seq Tasks
+
+
+
+
