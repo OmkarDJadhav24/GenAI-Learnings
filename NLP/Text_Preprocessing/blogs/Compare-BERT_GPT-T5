@@ -1,0 +1,28 @@
+
+| Feature / Model      | BERT                                                    | GPT                               | T5                                 |
+| -------------------- | ------------------------------------------------------- | --------------------------------- | ---------------------------------- |
+| **Full Name**        | Bidirectional Encoder Representations from Transformers | Generative Pretrained Transformer | Text-to-Text Transfer Transformer  |
+| **Developed by**     | Google AI                                               | OpenAI                            | Google Research                    |
+| **Year Introduced**  | 2018                                                    | 2018                              | 2020                               |
+| **Architecture**     | Encoder-only                                            | Decoder-only                      | Encoder-Decoder (full Transformer) |
+| **Pretraining Task** | Masked Language Modeling (MLM)                          | Causal Language Modeling (CLM)    | MLM + many others (multitask)      |
+| **Use Case Type**    | Understanding                                           | Generation                        | Both (flexible)                    |
+| **Typical Tasks**    | Classification, Q\&A, NER                               | Text generation, chatbots         | Q\&A, summarization, translation   |
+| **Input Format**     | Plain sentence                                          | Prompts or plain sentences        | Input + Task label as text         |
+| **Output Format**    | Sentence-level output                                   | Text continuation                 | Any text                           |
+| **Popular Variants** | RoBERTa, DistilBERT, ALBERT                             | GPT-2, GPT-3, GPT-4               | mT5, FLAN-T5                       |
+
+
+
+
+
+🧪 When to Use What?
+Goal	                                     Model
+Text classification	                     BERT
+Summarization	                             T5
+Chatbot or text generation	             GPT
+Multilingual translation	             mT5 (T5 variant)
+Extract info from documents	             BERT
+Flexible multi-task setup	             T5
+
+
