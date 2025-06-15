@@ -1,0 +1,80 @@
+🚀 Phase 3: Hugging Face Transformers Library — Roadmap
+
+✅ Step 1: What is Hugging Face?
+Hugging Face is an open-source platform that provides:
+
+    1. Pretrained transformer models (like BERT, GPT-2, T5)
+    2. Tools to load, fine-tune, and use models easily
+    3. transformers Python library for NLP, vision, audio tasks
+
+
+✅ Step 2: Install and Import
+Let’s install Hugging Face Transformers and Datasets:
+
+pip install transformers datasets
+
+Import the basics:
+    from transformers import pipeline
+
+
+✅ Step 3: Try Built-in Pipelines (No training needed)
+We’ll explore popular use cases via pipeline():
+
+| Task                           | Example                                     |
+| ------------------------------ | ------------------------------------------- |
+| Sentiment Analysis             | `pipeline("sentiment-analysis")`            |
+| Text Generation                | `pipeline("text-generation", model="gpt2")` |
+| Question Answering             | `pipeline("question-answering")`            |
+| Summarization                  | `pipeline("summarization")`                 |
+| Translation                    | `pipeline("translation_en_to_fr")`          |
+| Named Entity Recognition (NER) | `pipeline("ner")`                           |
+
+
+
+We can run one right away like this:
+
+generator = pipeline("text-generation", model="gpt2")
+print(generator("In the future, AI will", max_length=30, num_return_sequences=1))
+
+
+
+✅ Step 4: Understand Pipeline Components
+When we use any pipeline, behind the scenes, 3 major components are used:
+
+    1. Tokenizer – breaks text into tokens
+    2. Model – the transformer (e.g., GPT2, BERT, T5)
+    3. Pipeline wrapper – to load model + tokenizer and run them easily
+
+Later, we’ll learn to customize all 3 manually.
+
+
+
+✅ Step 5: Use Pretrained Models and Tokenizers
+
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+
+tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased-finetuned-sst-2-english")
+model = AutoModelForSequenceClassification.from_pretrained("distilbert-base-uncased-finetuned-sst-2-english")
+
+
+
+✅ Step 6: Load Custom Dataset using Hugging Face datasets
+
+from datasets import load_dataset
+dataset = load_dataset("imdb")
+
+
+This gives you:
+
+    dataset['train']
+    dataset['test']
+
+We’ll later fine-tune models on this!
+
+
+✅ Step 7: Build End-to-End Example
+Later, we’ll build a custom fine-tuned model like:
+
+    Fine-tune BERT on a custom dataset for classification
+    Fine-tune T5 for summarization
+    Use GPT-2 for custom generation
