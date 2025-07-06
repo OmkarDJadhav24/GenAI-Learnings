@@ -1,0 +1,33 @@
+Retrieval-Augmented-Generation (RAG)
+
+Defination:
+            RAG is a hybrid architecture that combines to powerful ideas in GenAI.
+            1. Retrievel: Fetch a most releavant documents from knowledge base.
+            2. Generation: Feed those documents into an LLM to generate a contextual response.
+
+Instead of relying on the model training data, it retrieves information from external sources at runtime and uses that info to generate info.
+
+
+Real-World Analogy
+🧠 Imagine ChatGPT is like a smart person with a great memory — but their memory is from books read a year ago.
+📚 Now, imagine you give them a file folder with the latest reports before asking a question — they quickly read it and then answer.
+
+That's what RAG does:
+1. It retrieves the most relevant documents using semantic search
+2. And generates answers based on the latest, relevant info
+
+-----------------------------------------------------------------------------
+Interview Questions + Answers
+Q1: What is Retrieval-Augmented Generation (RAG)?
+A: RAG is a GenAI architecture where an LLM is combined with a retriever component. The retriever finds relevant documents from a vector database, and the LLM uses them to generate context-aware responses.
+
+Q2: Why do we use RAG instead of relying only on the LLM?
+A: Because LLMs have limited memory (training cutoff), and cannot access up-to-date or private data. RAG brings in external knowledge dynamically, making the model more accurate and current.
+
+Q3: What are some tools used in RAG pipelines?
+A:
+1. Embeddings (OpenAI, HuggingFace)
+2. Vector DBs (FAISS, ChromaDB, Pinecone)
+3. LangChain (or LlamaIndex) for orchestration
+4. LLMs like GPT-4, Claude, etc.
+

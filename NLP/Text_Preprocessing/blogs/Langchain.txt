@@ -1,0 +1,20 @@
+LangChain
+
+Defination: 
+            Langchain is python's open source framework used for building GenAI applications with LLMs.
+            It connects LLMs to:
+            1. tools(Google, Python, APIs)
+            2. memory (previous chats)
+            3. databses (FAISS)
+            4. chains (multi-step workflows)
+
+            So instead of you writing everything manually, LangChain handles everything.
+
+
+Interview Questions + Answers
+
+Q1: What is LangChain and why use it?
+A: LangChain is a framework to help connect LLMs with tools like vector DBs, APIs, and memory. It simplifies building GenAI applications like chatbots or data assistants.
+
+Q2: What is a “chain” in LangChain?
+A: A chain is a sequence of steps involving LLMs and tools. For example, embedding → retrieval → prompt → LLM → output.

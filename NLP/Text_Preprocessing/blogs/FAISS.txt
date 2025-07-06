@@ -1,0 +1,25 @@
+FAISS (Facebook AI Similarity Search)
+
+Defination:
+            FAISS is vector Similarity Search Library developed by Facebook AI. It allows us to store High dimensional embeddings and efficiently search similar vectors using nearest-neighbor techniques.
+            It's commonly used in GenAI applications for fast retrieval of document chunks.
+
+
+Real-World Analogy
+🔍 Imagine you have 10,000 documents, and someone asks:
+“Which 3 are most similar to this question?”
+Instead of checking each document manually, FAISS searches them in milliseconds using smart math.
+
+It’s like Google Search, but for vectors (numbers representing meanings of text).
+
+
+
+ Interview Questions + Answers
+Q1: What is FAISS?
+A: FAISS is a vector similarity search library that indexes high-dimensional vectors and retrieves the most similar ones quickly.
+
+Q2: How is FAISS used in RAG?
+A: FAISS stores document embeddings. When a query is given, it retrieves the most semantically similar documents to help the LLM answer accurately.
+
+Q3: Can FAISS scale to millions of documents? (check in details in future)
+A: Yes, FAISS supports indexing millions of embeddings efficiently using techniques like IVF (Inverted File Index) and quantization.

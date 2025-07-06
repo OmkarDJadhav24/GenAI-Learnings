@@ -1,0 +1,36 @@
+Can you explain the Transformer architecture?
+Ans:  Transformer is deep learning architecture introduced in 2017 paper "Attention is all you need". 
+      It is primarily used for sequence modeling tasks like text summarization, machine translation, Question-Answering.
+      Unlike older models like RNNs and LSTM, which processes data sequentially, transformer processes entire sequence at once, which makes them faster and parallel.
+
+
+      Core Components of Transformer:
+	1. Input Embedding + Positional Encoding
+	2. Encoder-Decoder Architecture
+	3. Self-Attention Mechanism
+	4. Multi-Head Attention
+	5. Feed-Forward Network
+	6. Layer Normalization and Residual Connections
+
+	1. Input Embeddings + Position Encoding
+		Transformer process data sequentially so they add positional information so model knows the order of tokens. 
+	
+	2. Encoder-Decoder Architecture
+
+		Encoder Architecture: Encoder models(like BERT) uses only the encoder architecture of transformer. This models can access all words of sentence at each  
+                 	stage called Bi-Directional Attention which helps models to understand the context deeply.
+		 	During training some words in a sentence are masked or hidden and models learns to predict them.
+		 	They are best at task that needs full sentence understanding like classification, NER, Question-Answering(Extractive)
+
+	        Decoder Architecture: Decoder models(like GPT) uses only the decoder architecture of transformer. This models can access only previous words.
+			During training the model learns to predict the next word in a sentence.
+			They are best for text generation tasks. 
+
+	3. Self-Attention Mechanism: This allows each word to calculate attention score with other words including itself to understand which word pays how much  
+		attention to other words to understand the relationship between words. This is achieved by Query(Q), Key(K), Value(V) matrices.
+
+	4. Multi-Head Attention: Instead of single attention, the model uses multiple heads to understand the sentence from multiple perspectives.
+
+	5. Feed-Forward Network: will check later
+
+	6. Layer Normalization and Residual Connections: will check later
